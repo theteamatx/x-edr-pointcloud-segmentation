@@ -1,0 +1,62 @@
+syntax = "proto2";
+
+package blue.mobility;
+
+import "googlex/proxy/module_system/robot_config/robot_config.proto";
+
+// Next id: 5
+message ClusterRegionConfigProto {
+  enum ClusterMethod {
+    // Use nearest neighboring method for region growing.
+    NEAREST_NEIGHBOR_DEFAULT = 0;
+    // Use mean shift method for clustering. A slow method but grouping with
+    // consideration of density.
+    MEAN_SHIFT = 1;
+  }
+  // The mininum number of points in a cluster.
+  optional int32 min_region_inliers = 1;
+  // The squared Euclidean Distance (in meters) for point cloud clustering.
+  optional float squared_distance_threshold = 2;
+  // Half of the search window size to connect the neighbors.
+  // (window_size = 2 * half_search_window + 1).
+  optional int32 half_search_window = 3;
+  // The method use for cluster object segmentation.
+  optional ClusterMethod cluster_method = 4;
+}
+
+extend common.RobotConfig {
+  optional ClusterRegionConfigProto cluster_region_config = 20190320;
+}
+
+// Next id: 13
+message PlanarRegionConfigProto {
+  // Maximum distance between seed points and the previous region
+  // centroid.
+  optional float max_distance_for_seed_point = 12;
+  // Maximum distance between seed points normal and the previous region
+  // centroid normal.
+  optional float max_normal_difference_angle_for_seed_point = 11;
+  // Maximum plane distance for a candidate point to be considered an inlier
+  optional float max_plane_distance = 2;
+  // Minimum region area to be passing in CheckAndFinalize
+  optional float min_region_area = 3;
+  // Minimum region inlier number to be passing in CheckAndFinalize
+  optional int32 min_region_inliers = 4;
+  // Number of inliers after which the plane model is reestimated again
+  optional int32 plane_model_reestimation_period = 5;
+  // Minimum range in meters beyond which discontinuous boundary points are
+  // computed.
+  optional float discontinuity_min_range = 6;
+  // Maximum range in meters under which discontinuous boundary points are
+  // computed.
+  optional float discontinuity_max_range = 7;
+  // Maximum angular difference between 2 neighboring point normal vectors
+  // above which the point is considered discontinuous.
+  optional float discontinuity_normal_angle_diff = 8;
+  // Maximum z difference in meters between 2 neighboring points above which
+  // the point is considered discontinuous.
+  optional float discontinuity_z_diff = 9;
+  // Maximum ratio of delta_z over displacement between 2 neighboring points
+  // for it to be considered discontinuous.
+  optional float discontinuity_z_ratio = 10;
+}

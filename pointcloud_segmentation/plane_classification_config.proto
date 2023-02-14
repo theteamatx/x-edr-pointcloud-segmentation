@@ -1,0 +1,49 @@
+syntax = "proto2";
+
+package blue.mobility;
+
+import "googlex/proxy/module_system/robot_config/robot_config.proto";
+
+// Parameters for classifying horizontal planes.
+// Next id: 6
+message ClassifyHorizontalPlaneParams {
+  // Maximum delta angle from straight up.
+  optional float max_up_direction_delta_angle_degrees = 1;
+
+  // Offset for this class from a known point.
+  optional float floor_offset = 2;
+
+  // Deviation from the offset allowed.
+  optional float max_floor_offset_deviation = 3;
+
+  // Planar area limits for this class.
+  optional float min_area = 4;
+  optional float max_area = 5;
+}
+
+// Parameters for extracting walls.
+// Next id: 3
+message ClassifyWallParams {
+  // Max delta angle from horizontal.
+  optional float max_horizontal_delta_angle_degrees = 1;
+
+  // Minimum height of a plane to be considered a wall.
+  optional float min_height = 2;
+}
+
+// Next id: 4
+message PlaneClassificationConfigProto {
+  // Parameters to extract floor planes.
+  optional ClassifyHorizontalPlaneParams floor_params = 1;
+
+  // Parameters to extract coffee tables.
+  optional ClassifyHorizontalPlaneParams coffee_table_params = 2;
+
+  // Parameters to extract walls.
+  optional ClassifyWallParams wall_params = 3;
+}
+
+extend common.RobotConfig {
+  optional PlaneClassificationConfigProto plane_classification_config =
+      20180328;
+}

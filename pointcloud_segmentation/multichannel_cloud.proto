@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package blue.mobility;
+
+import "googlex/proxy/blueproto/eigen.proto";
+import "googlex/proxy/conversions/legacy_proto/geometry_types.proto";
+import "googlex/proxy/conversions/legacy_proto/header.proto";
+import "googlex/proxy/module_system/core/message_header.proto";
+import "third_party/robotics/logging/proto_options.proto";
+
+option java_outer_classname = "MultichannelCloudProtos";
+option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";  // See http://go/go-api-flag.
+
+// MultichannelCloudProto implements an organized (height > 1) or unorganized
+// (height==1) point cloud, similar to a PCL point cloud. If the point cloud is
+// organized, the 2D point adjacency is defined by the following index lookup:
+// point[row * width + col]
+// Unorganized point clouds have height equal to 1. In both cases, points.size()
+// is width * height. Normals are optional, but if provided must have the same
+// size as points. The normal indices correspond to the point indices with the
+// same index for organized and unorganized point clouds. Invalid points/normals
+// are represented by NaN's.
+// NextID: 17
+message MultichannelCloudProto {
+  // The message header.
+  common.MessageHeaderProto header = 10;
+  // Pose of the sensor in the point cloud frame. If the point cloud frame is
+  // the sensor frame, this should be the identity
+  blue.Pose3dProto point_cloud_pose_sensor = 12;
+  // Width of the point cloud
+  int32 width = 3;
+  // Height of the point cloud (unorganized point clouds have a height of 1)
+  int32 height = 4;
+
+  // (Required) Coordinates stored columnwise in xyzxyzxyz order.
+  // Size: width * height * 3
+  repeated float points_xyz = 7
+      [(.robotics.logging.drop_from_capacitor_export) = true];
+  // Point normals stored columnwise in xyzxyzxyz order.
+  // Size: width * height * 3
+  repeated float normals_xyz = 8
+      [(.robotics.logging.drop_from_capacitor_export) = true];
+  // Point intensities stored columnwise.
+  // Size: width * height
+  repeated float intensities = 9
+      [(.robotics.logging.drop_from_capacitor_export) = true];
+  // Point color values between 0 and 1 stored columnwise in rgbrgbrgb order.
+  // Size: width * height * 3
+  repeated float colors_rgb_f = 11
+      [(.robotics.logging.drop_from_capacitor_export) = true];
+
+  // CBr origin (x,y,z) for each points on the [width * height] point cloud.
+  // Coordinates stored columnwise in xyzxyzxyz order.
+  // Size: width * height * 3.
+  repeated float cbr_origins = 13
+      [(.robotics.logging.drop_from_capacitor_export) = true];
+  // CBr attribute fields for each point on the [width * height] point cloud.
+  // Size : width * height * 3  (due to each shot having up to 3 returns).
+  repeated float return_pulse_widths = 14
+      [(.robotics.logging.drop_from_capacitor_export) = true];
+  repeated float return_intensities = 15
+      [(.robotics.logging.drop_from_capacitor_export) = true];
+  repeated float return_ranges = 16
+      [(.robotics.logging.drop_from_capacitor_export) = true];
+
+  reserved "points", "normals";
+  reserved 5, 6;
+
+  // Deprecated fields with existing logs.
+  legacy_proto.Header deprecated_header = 1 [deprecated = true];
+  legacy_proto.Pose3D deprecated_point_cloud_pose_sensor = 2
+      [deprecated = true];
+}
