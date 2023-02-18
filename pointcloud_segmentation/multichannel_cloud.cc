@@ -5,13 +5,13 @@
 #include "eigenmath/conversions.h"
 #include "pointcloud_segmentation/cloud_proto_utils.h"
 
-namespace blue::mobility {
+namespace mobility {
 
 eigenmath::Pose3d ConstMultichannelCloud::PointCloudPoseSensor() const {
   eigenmath::Pose3d point_cloud_pose_sensor;
   if (const_proto_->has_point_cloud_pose_sensor()) {
-    point_cloud_pose_sensor =
-        eigenmath::conversions::PoseFromProto(const_proto_->point_cloud_pose_sensor());
+    point_cloud_pose_sensor = eigenmath::conversions::PoseFromProto(
+        const_proto_->point_cloud_pose_sensor());
   }
   return point_cloud_pose_sensor;
 }
@@ -145,4 +145,4 @@ ConstMultichannelCloudView::ConstMultichannelCloudView(
 
 #undef DEFINE_ACCESSORS
 
-}  // namespace blue::mobility
+}  // namespace mobility

@@ -5,7 +5,7 @@
 
 #include "absl/log/check.h"
 
-namespace blue::mobility {
+namespace mobility {
 
 PlaneEstimator::PlaneEstimator() { Clear(); }
 
@@ -228,4 +228,4 @@ void PlaneEstimator::ToProto(PlaneEstimatorProto* proto) const {
   }
 }
 
-}  // namespace blue::mobility
+}  // namespace mobility

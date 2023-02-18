@@ -5,7 +5,7 @@
 #include <limits>
 #include <string>
 
-namespace blue::mobility {
+namespace mobility {
 
 namespace {
 
@@ -108,8 +108,7 @@ void ClassifyPlane(const PlaneClassificationConfigProto& config,
                                          known_floor_point,
                                          &summary->coffee_table_rejections)) {
     // Is the plane a coffee table?
-    *planar_region->mutable_plane_class() =
-        PlaneClass::kTable;
+    *planar_region->mutable_plane_class() = PlaneClass::kTable;
   } else if (IsWall(config.wall_params(), *planar_region,
                     robot_normal_direction)) {
     // Is the plane a wall?
@@ -120,4 +119,4 @@ void ClassifyPlane(const PlaneClassificationConfigProto& config,
   }
 }
 
-}  // namespace blue::mobility
+}  // namespace mobility

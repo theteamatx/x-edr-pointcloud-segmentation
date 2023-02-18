@@ -2,14 +2,12 @@
 
 #include <vector>
 
-#include "pointcloud_segmentation/cloud.h"
-#include "pointcloud_segmentation/planar_region.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+#include "pointcloud_segmentation/cloud.h"
+#include "pointcloud_segmentation/planar_region.h"
 
-namespace blue::mobility {
-
-static constexpr float kEpsilon = 1.0e-7f;
+namespace mobility {
 
 TEST(TestPointCloudSegmentation, FindSeedPoints) {
   constexpr int kSize = 5;
@@ -38,4 +36,4 @@ TEST(TestPointCloudSegmentation, FindSeedPoints) {
   EXPECT_EQ(seed_point_indices.size(), (kSize - 2) * (kSize - 2));
 }
 
-}  // namespace blue::mobility
+}  // namespace mobility

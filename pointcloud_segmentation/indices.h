@@ -20,7 +20,7 @@
 #include <type_traits>
 #include <vector>
 
-namespace blue::mobility {
+namespace mobility {
 
 using Indices = std::vector<int>;
 struct NoIndices {};
@@ -95,6 +95,6 @@ inline int GetIndicesSize(const IndexedContainerT& indexed_container,
       indexed_container, indices);
 }
 
-}  // namespace blue::mobility
+}  // namespace mobility
 
 #endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_INDICES_H_

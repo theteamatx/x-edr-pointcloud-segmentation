@@ -4,8 +4,7 @@
 #include <limits>
 #include <vector>
 
-namespace blue::mobility {
-
+namespace mobility {
 namespace detail {
 
 std::vector<Neighbor> CreateNeighborhood(
@@ -92,4 +91,4 @@ bool CheckMinRowsAndCols(const std::vector<int>& indices, int rows, int cols,
 
 }  // namespace detail
 
-}  // namespace blue::mobility
+}  // namespace mobility

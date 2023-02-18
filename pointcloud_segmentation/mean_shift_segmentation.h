@@ -25,8 +25,7 @@
 #include "pointcloud_segmentation/cluster_region.h"
 #include "pointcloud_segmentation/region_segmentation_config.pb.h"
 
-namespace blue::mobility {
-
+namespace mobility {
 namespace internal {
 
 // If the distance between a point and a object centroid within this threshold,
@@ -330,6 +329,6 @@ void SlidingMeanShift(const Cloud<PointType>& point_cloud,
   }
 }
 
-}  // namespace blue::mobility
+}  // namespace mobility
 
 #endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_MEAN_SHIFT_SEGMENTATION_H_

@@ -26,7 +26,7 @@
 #include "pointcloud_segmentation/planar_region.h"
 #include "pointcloud_segmentation/plane_classification_config.pb.h"
 
-namespace blue::mobility {
+namespace mobility {
 
 struct PlaneClassificationDebugSummary {
   int total_considered = 0;
@@ -51,6 +51,6 @@ void ClassifyPlane(const PlaneClassificationConfigProto& config,
                    PlanarRegion<>* planar_region,
                    PlaneClassificationDebugSummary* summary);
 
-}  // namespace blue::mobility
+}  // namespace mobility
 
 #endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_PLANE_CLASSIFICATION_H_

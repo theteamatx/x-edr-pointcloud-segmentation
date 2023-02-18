@@ -16,7 +16,7 @@
 
 syntax = "proto3";
 
-package blue.mobility;
+package mobility;
 
 import "eigenmath/eigenmath.proto";
 
@@ -61,5 +61,4 @@ message MultichannelCloudProto {
   repeated float return_pulse_widths = 14;
   repeated float return_intensities = 15;
   repeated float return_ranges = 16;
-
 }

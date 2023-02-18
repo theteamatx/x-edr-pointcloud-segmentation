@@ -2,19 +2,19 @@
 
 #include <vector>
 
+#include "benchmark/benchmark.h"
 #include "eigenmath/matchers.h"
 #include "eigenmath/pose3.h"
 #include "eigenmath/pose3_utils.h"
 #include "eigenmath/so3.h"
 #include "eigenmath/types.h"
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 #include "pointcloud_segmentation/cloud.h"
 #include "pointcloud_segmentation/multichannel_cloud.h"
 #include "pointcloud_segmentation/multichannel_cloud.pb.h"
-#include "benchmark/benchmark.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
 
-namespace blue::mobility {
+namespace mobility {
 namespace {
 
 using ::eigenmath::testing::IsApprox;
@@ -28,19 +28,19 @@ TEST(TestPointCloudAlgorithms, IsInsideTriangleClockwise) {
   Eigen::Vector3f w(1.0f, -1.0f, 0.0f);
   Eigen::Vector3f p(0.2f, -0.1f, 0.0f);
 
-  EXPECT_TRUE(blue::mobility::detail::IsInsideTriangle(u, v, w, p));
+  EXPECT_TRUE(::mobility::detail::IsInsideTriangle(u, v, w, p));
   p.z() = 1.0;
-  EXPECT_TRUE(blue::mobility::detail::IsInsideTriangle(u, v, w, p));
+  EXPECT_TRUE(::mobility::detail::IsInsideTriangle(u, v, w, p));
   p.z() = -1.0;
-  EXPECT_TRUE(blue::mobility::detail::IsInsideTriangle(u, v, w, p));
+  EXPECT_TRUE(::mobility::detail::IsInsideTriangle(u, v, w, p));
   p.y() = 0.1;
-  EXPECT_FALSE(blue::mobility::detail::IsInsideTriangle(u, v, w, p));
+  EXPECT_FALSE(::mobility::detail::IsInsideTriangle(u, v, w, p));
   p.x() = 1.1;
   p.y() = -0.1;
-  EXPECT_FALSE(blue::mobility::detail::IsInsideTriangle(u, v, w, p));
+  EXPECT_FALSE(::mobility::detail::IsInsideTriangle(u, v, w, p));
   p.x() = 0.1;
   p.y() = -0.2;
-  EXPECT_FALSE(blue::mobility::detail::IsInsideTriangle(u, v, w, p));
+  EXPECT_FALSE(::mobility::detail::IsInsideTriangle(u, v, w, p));
 }
 
 TEST(TestPointCloudAlgorithms, IsInsideTriangleCounterClockwise) {
@@ -49,19 +49,19 @@ TEST(TestPointCloudAlgorithms, IsInsideTriangleCounterClockwise) {
   Eigen::Vector3f w(1.0f, 1.0f, 0.0f);
   Eigen::Vector3f p(0.2f, 0.1f, 0.0f);
 
-  EXPECT_TRUE(blue::mobility::detail::IsInsideTriangle(u, v, w, p));
+  EXPECT_TRUE(::mobility::detail::IsInsideTriangle(u, v, w, p));
   p.z() = 1.0;
-  EXPECT_TRUE(blue::mobility::detail::IsInsideTriangle(u, v, w, p));
+  EXPECT_TRUE(::mobility::detail::IsInsideTriangle(u, v, w, p));
   p.z() = -1.0;
-  EXPECT_TRUE(blue::mobility::detail::IsInsideTriangle(u, v, w, p));
+  EXPECT_TRUE(::mobility::detail::IsInsideTriangle(u, v, w, p));
   p.y() = -0.1;
-  EXPECT_FALSE(blue::mobility::detail::IsInsideTriangle(u, v, w, p));
+  EXPECT_FALSE(::mobility::detail::IsInsideTriangle(u, v, w, p));
   p.x() = 1.1;
   p.y() = 0.1;
-  EXPECT_FALSE(blue::mobility::detail::IsInsideTriangle(u, v, w, p));
+  EXPECT_FALSE(::mobility::detail::IsInsideTriangle(u, v, w, p));
   p.x() = 0.1;
   p.y() = 0.2;
-  EXPECT_FALSE(blue::mobility::detail::IsInsideTriangle(u, v, w, p));
+  EXPECT_FALSE(::mobility::detail::IsInsideTriangle(u, v, w, p));
 }
 
 TEST(TestPointCloudAlgorithms, IsEar) {
@@ -81,22 +81,21 @@ TEST(TestPointCloudAlgorithms, IsEar) {
   points.AtUnsafe(4) = {2.0f, 0.0f, 0.0f};
   points.AtUnsafe(5) = {1.0f, 0.8f, 0.0f};
   std::vector<int> polygon{0, 3, 2, 1, 4, 5};
-  Eigen::Vector3f normal =
-      blue::mobility::CumulativePolygonNormal(points, polygon);
+  Eigen::Vector3f normal = ::mobility::CumulativePolygonNormal(points, polygon);
 
   // Initial ear clipping candidates
-  EXPECT_TRUE(blue::mobility::detail::IsEar(points, 0, 1, 2, polygon, normal));
-  EXPECT_FALSE(blue::mobility::detail::IsEar(points, 1, 2, 3, polygon, normal));
-  EXPECT_FALSE(blue::mobility::detail::IsEar(points, 2, 3, 4, polygon, normal));
-  EXPECT_TRUE(blue::mobility::detail::IsEar(points, 3, 4, 5, polygon, normal));
-  EXPECT_FALSE(blue::mobility::detail::IsEar(points, 4, 5, 0, polygon, normal));
-  EXPECT_FALSE(blue::mobility::detail::IsEar(points, 5, 0, 1, polygon, normal));
+  EXPECT_TRUE(::mobility::detail::IsEar(points, 0, 1, 2, polygon, normal));
+  EXPECT_FALSE(::mobility::detail::IsEar(points, 1, 2, 3, polygon, normal));
+  EXPECT_FALSE(::mobility::detail::IsEar(points, 2, 3, 4, polygon, normal));
+  EXPECT_TRUE(::mobility::detail::IsEar(points, 3, 4, 5, polygon, normal));
+  EXPECT_FALSE(::mobility::detail::IsEar(points, 4, 5, 0, polygon, normal));
+  EXPECT_FALSE(::mobility::detail::IsEar(points, 5, 0, 1, polygon, normal));
 
   // Other possible combinations
-  EXPECT_TRUE(blue::mobility::detail::IsEar(points, 0, 2, 3, polygon, normal));
-  EXPECT_TRUE(blue::mobility::detail::IsEar(points, 2, 3, 0, polygon, normal));
-  EXPECT_TRUE(blue::mobility::detail::IsEar(points, 2, 3, 5, polygon, normal));
-  EXPECT_TRUE(blue::mobility::detail::IsEar(points, 5, 0, 2, polygon, normal));
+  EXPECT_TRUE(::mobility::detail::IsEar(points, 0, 2, 3, polygon, normal));
+  EXPECT_TRUE(::mobility::detail::IsEar(points, 2, 3, 0, polygon, normal));
+  EXPECT_TRUE(::mobility::detail::IsEar(points, 2, 3, 5, polygon, normal));
+  EXPECT_TRUE(::mobility::detail::IsEar(points, 5, 0, 2, polygon, normal));
 }
 
 TEST(TestPointCloudAlgorithms, PolygonNormalAndArea) {
@@ -105,24 +104,23 @@ TEST(TestPointCloudAlgorithms, PolygonNormalAndArea) {
   points.AtUnsafe(1) = {1.0f, 1.0f, 1000.0f};
   points.AtUnsafe(2) = {1.0f, 0.0f, 1000.0f};
 
-  Eigen::Vector3f normal = blue::mobility::PolygonNormal(points);
+  Eigen::Vector3f normal = ::mobility::PolygonNormal(points);
   EXPECT_NEAR(0.0f, normal.x(), kEpsilon);
   EXPECT_NEAR(0.0f, normal.y(), kEpsilon);
   EXPECT_NEAR(-1.0f, normal.z(), kEpsilon);
-  EXPECT_NEAR(0.5f, blue::mobility::PolygonArea(points), kEpsilon);
+  EXPECT_NEAR(0.5f, ::mobility::PolygonArea(points), kEpsilon);
   // Test correct zero area behavior by adding indices that don't add area
-  EXPECT_NEAR(
-      0.5f,
-      blue::mobility::PolygonArea(points, std::vector<int>{0, 1, 2, 1, 2}),
-      kEpsilon);
+  EXPECT_NEAR(0.5f,
+              ::mobility::PolygonArea(points, std::vector<int>{0, 1, 2, 1, 2}),
+              kEpsilon);
 
   points.AtUnsafe(1).y() = 0.0f;
   points.AtUnsafe(1).z() = 999.0f;
-  normal = blue::mobility::PolygonNormal(points);
+  normal = ::mobility::PolygonNormal(points);
   EXPECT_NEAR(0.0f, normal.x(), kEpsilon);
   EXPECT_NEAR(-1.0f, normal.y(), kEpsilon);
   EXPECT_NEAR(0.0f, normal.z(), kEpsilon);
-  EXPECT_NEAR(0.5f, blue::mobility::PolygonArea(points), kEpsilon);
+  EXPECT_NEAR(0.5f, ::mobility::PolygonArea(points), kEpsilon);
 }
 
 TEST(TestPointCloudAlgorithms, TriangulateLoopyPolygon) {
@@ -144,31 +142,29 @@ TEST(TestPointCloudAlgorithms, TriangulateLoopyPolygon) {
 
   std::vector<int> polygon{0, 3, 2, 1, 4, 5};
   std::vector<int> triangles;
-  EXPECT_TRUE(
-      blue::mobility::TriangulateLoopyPolygon(points, polygon, &triangles));
+  EXPECT_TRUE(::mobility::TriangulateLoopyPolygon(points, polygon, &triangles));
   EXPECT_EQ(triangles.size(), (points.size() - 2) * 3);
 
   float area = 0.0f;
   for (int i = 0; i < triangles.size(); i += 3) {
-    area += blue::mobility::PolygonArea(
+    area += ::mobility::PolygonArea(
         points,
         std::vector<int>{triangles[i], triangles[i + 1], triangles[i + 2]});
   }
-  EXPECT_NEAR(area, blue::mobility::PolygonArea(points, polygon), kEpsilon);
+  EXPECT_NEAR(area, ::mobility::PolygonArea(points, polygon), kEpsilon);
 
   // add a zero area polygon part with duplicated indices
   polygon = {0, 3, 2, 1, 4, 5, 4, 1, 4, 5};
-  EXPECT_TRUE(
-      blue::mobility::TriangulateLoopyPolygon(points, polygon, &triangles));
+  EXPECT_TRUE(::mobility::TriangulateLoopyPolygon(points, polygon, &triangles));
   EXPECT_EQ(triangles.size(), (points.size() - 2) * 3);
 
   area = 0.0f;
   for (int i = 0; i < triangles.size(); i += 3) {
-    area += blue::mobility::PolygonArea(
+    area += ::mobility::PolygonArea(
         points,
         std::vector<int>{triangles[i], triangles[i + 1], triangles[i + 2]});
   }
-  EXPECT_NEAR(area, blue::mobility::PolygonArea(points, polygon), kEpsilon);
+  EXPECT_NEAR(area, ::mobility::PolygonArea(points, polygon), kEpsilon);
 }
 
 TEST(TestPointCloudAlgorithms, TriangulatePolygonRealCase) {
@@ -190,16 +186,16 @@ TEST(TestPointCloudAlgorithms, TriangulatePolygonRealCase) {
 
   std::vector<int> polygon{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
   std::vector<int> triangles;
-  EXPECT_TRUE(blue::mobility::TriangulatePolygon(points, polygon, &triangles));
+  EXPECT_TRUE(::mobility::TriangulatePolygon(points, polygon, &triangles));
   EXPECT_EQ(triangles.size(), (polygon.size() - 2) * 3);
 
   float area = 0.0f;
   for (int i = 0; i < triangles.size(); i += 3) {
-    area += blue::mobility::PolygonArea(
+    area += ::mobility::PolygonArea(
         points,
         std::vector<int>{triangles[i], triangles[i + 1], triangles[i + 2]});
   }
-  EXPECT_NEAR(area, blue::mobility::PolygonArea(points, polygon), kEpsilon);
+  EXPECT_NEAR(area, ::mobility::PolygonArea(points, polygon), kEpsilon);
 }
 
 CloudBuffer<eigenmath::Vector3f> BuildDensePointCloud(int size_x, int size_y,
@@ -221,7 +217,7 @@ TEST(TestPointCloudAlgorithms, FindNormalSupportNeighbors) {
 
   std::vector<int> indices;
   indices.resize(9);
-  EXPECT_EQ(9, blue::mobility::detail::FindNormalSupportNeighbors(
+  EXPECT_EQ(9, ::mobility::detail::FindNormalSupportNeighbors(
                    points, 20, 20, 0.05, 0.4, true, &indices));
   EXPECT_THAT(indices, testing::Contains(21 * 100 + 20));
   EXPECT_THAT(indices, testing::Contains(20 * 100 + 21));
@@ -242,8 +238,8 @@ void BM_FindNormalSupportNeighbors(benchmark::State& state) {
   std::vector<int> indices;
   indices.resize(9);
   for (auto _ : state) {
-    blue::mobility::detail::FindNormalSupportNeighbors(points, 50, 50, min, max,
-                                                       true, &indices);
+    ::mobility::detail::FindNormalSupportNeighbors(points, 50, 50, min, max,
+                                                   true, &indices);
   }
 }
 BENCHMARK(BM_FindNormalSupportNeighbors)
@@ -416,4 +412,4 @@ TYPED_TEST(AlgorithmsTest, ComputeRigidTransform) {
 }
 
 }  // namespace
-}  // namespace blue::mobility
+}  // namespace mobility

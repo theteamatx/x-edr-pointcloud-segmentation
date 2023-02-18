@@ -16,7 +16,7 @@
 
 syntax = "proto3";
 
-package blue.mobility;
+package mobility;
 
 import "eigenmath/eigenmath.proto";
 

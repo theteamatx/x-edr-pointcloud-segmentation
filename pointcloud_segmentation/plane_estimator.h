@@ -25,7 +25,7 @@
 #include "pointcloud_segmentation/indices.h"
 #include "pointcloud_segmentation/plane_estimator.pb.h"
 
-namespace blue::mobility {
+namespace mobility {
 
 // PlaneEstimator efficiently keeps track of a running plane estimate from a
 // set of points. Extending the set of points the plane estimate is only
@@ -119,6 +119,6 @@ class PlaneEstimator {
   float cumulative_weights_;
 };
 
-}  // namespace blue::mobility
+}  // namespace mobility
 
 #endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_PLANE_ESTIMATOR_H_

@@ -1,6 +1,6 @@
 #include "pointcloud_segmentation/segmentation.h"
 
-namespace blue::mobility {
+namespace mobility {
 
 CloudBuffer<int> PrepareUnlabeledLabels(
     const Cloud<eigenmath::Vector3f>& point_cloud) {
@@ -9,4 +9,4 @@ CloudBuffer<int> PrepareUnlabeledLabels(
   return labels;
 }
 
-}  // namespace blue::mobility
+}  // namespace mobility

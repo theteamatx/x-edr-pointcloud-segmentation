@@ -22,13 +22,13 @@
 #include <utility>
 #include <vector>
 
+#include "collision/convex_hull.h"
 #include "eigenmath/plane_conversions.h"
 #include "eigenmath/pose3.h"
 #include "pointcloud_segmentation/indices.h"
 #include "pointcloud_segmentation/plane_estimator.h"
-#include "collision/convex_hull.h"
 
-namespace blue::mobility {
+namespace mobility {
 namespace detail {
 
 // Tests if 3D point p is inside the triangle (u, v, w). Works for both
@@ -369,8 +369,7 @@ void ComputeNormalsOrganized(
     const Cloud<PointT>& points, Cloud<NormalT>* normals,
     const ComputeNormalsParams& params = ComputeNormalsParams()) {
   ComputeNormalsOrganized(point_cloud_pose_sensor, points, normals,
-                          {0, points.Rows()},
-                          {0, points.Cols()}, params);
+                          {0, points.Rows()}, {0, points.Cols()}, params);
 }
 
 // Ear-clipping triangulation for concave polygons. The output triangles have
@@ -657,7 +656,7 @@ double IterativeClosestPoint(const Cloud<PointT>& source,
     // square point to point distance metric minimizer.
     eigenmath::Pose3f dest_pose_transformed_source;
     CHECK(ComputeRigidTransform(transformed_source, neighbor_cloud,
-                                     &dest_pose_transformed_source));
+                                &dest_pose_transformed_source));
 
     // Transform the source points using the obtained transformation.
     mean_error = 0.0;
@@ -682,6 +681,6 @@ double IterativeClosestPoint(const Cloud<PointT>& source,
   return mean_error;
 }
 
-}  // namespace blue::mobility
+}  // namespace mobility
 
 #endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_ALGORITHMS_H_

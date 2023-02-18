@@ -1,10 +1,10 @@
 #include <vector>
 
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 #include "pointcloud_segmentation/cloud.h"
 #include "pointcloud_segmentation/cluster_region.h"
 #include "pointcloud_segmentation/segmentation.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
 
 // The generated cluster id of each point should look like (kSize=10):
 //  1  1  1  1 2 3 3 3 3  4
@@ -25,7 +25,7 @@
 // 5) two clusters that are close in the 3D world but disconnect by a line
 // 6) faraway points and roof point
 
-namespace blue::mobility {
+namespace mobility {
 
 namespace {
 constexpr int kSize = 10;
@@ -135,7 +135,7 @@ TEST(CLUSTER_POINT_CLOUD_TEST, SEGMENT_CLUSTER) {
   }
 }
 
-}  // namespace blue::mobility
+}  // namespace mobility
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

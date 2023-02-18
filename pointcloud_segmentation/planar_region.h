@@ -23,6 +23,7 @@
 #include <string>
 #include <vector>
 
+#include "absl/container/flat_hash_set.h"
 #include "eigenmath/scalar_utils.h"
 #include "eigenmath/types.h"
 #include "pointcloud_segmentation/algorithms.h"
@@ -31,9 +32,8 @@
 #include "pointcloud_segmentation/region_segmentation_config.pb.h"
 #include "pointcloud_segmentation/segmentation.h"
 #include "pointcloud_segmentation/semantic_types.h"
-#include "absl/container/flat_hash_set.h"
 
-namespace blue::mobility {
+namespace mobility {
 
 enum class PlaneClass : int { kUnknown = 0, kFloor, kWall, kTable };
 
@@ -516,6 +516,6 @@ void FindSeedPointsFromLastPlanarRegions(
   }
 }
 
-}  // namespace blue::mobility
+}  // namespace mobility
 
 #endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_PLANAR_REGION_H_

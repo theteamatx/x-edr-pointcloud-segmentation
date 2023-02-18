@@ -22,16 +22,16 @@
 #include <string>
 #include <vector>
 
-#include "eigenmath/eigenmath.pb.h"
+#include "absl/strings/string_view.h"
 #include "eigenmath/conversions.h"
+#include "eigenmath/eigenmath.pb.h"
 #include "eigenmath/pose3.h"
 #include "pointcloud_segmentation/cloud.h"
 #include "pointcloud_segmentation/cloud_proto_utils.h"
 #include "pointcloud_segmentation/detected_objects.pb.h"
 #include "pointcloud_segmentation/planar_region.h"
-#include "absl/strings/string_view.h"
 
-namespace blue::mobility {
+namespace mobility {
 
 // ToProto and FromProto of Plane3f.
 inline bool ToProto(const eigenmath::Plane3f& in_plane,
@@ -79,6 +79,6 @@ void CreatePlanarDetectedObjectProto(
     const Cloud<eigenmath::Vector3f>& point_cloud,
     absl::string_view object_class, DetectedObjectProto* out_proto);
 
-}  // namespace blue::mobility
+}  // namespace mobility
 
 #endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_DETECTED_OBJECTS_H_

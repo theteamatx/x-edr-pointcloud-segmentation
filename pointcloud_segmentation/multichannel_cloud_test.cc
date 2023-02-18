@@ -10,8 +10,7 @@
 #include "google/protobuf/util/message_differencer.h"
 #include "gtest/gtest.h"
 
-namespace blue::mobility {
-
+namespace mobility {
 namespace {
 
 using eigenmath::testing::IsApprox;
@@ -235,4 +234,4 @@ TEST(MultichannelCloud, ViewIsCopiedCorrectly) {
 
 }  // namespace
 
-}  // namespace blue::mobility
+}  // namespace mobility

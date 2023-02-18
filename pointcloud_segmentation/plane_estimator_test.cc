@@ -8,11 +8,11 @@
 #include "eigenmath/pose2.h"
 #include "eigenmath/pose3.h"
 #include "eigenmath/types.h"
-#include "pointcloud_segmentation/multichannel_cloud.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+#include "pointcloud_segmentation/multichannel_cloud.h"
 
-namespace blue::mobility {
+namespace mobility {
 namespace {
 
 // The normal error has numerical non-determinism issue due to the accumulator
@@ -58,8 +58,8 @@ TEST(PlaneEstimatorTest, PlaneNormal) {
 }
 
 TEST(TestPlaneEstimator, CornerCases) {
-  blue::mobility::PlaneEstimator plane_estimator;
- ::eigenmath::Vector3f point = {1.0f, 2.0f, 3.0f};
+  ::mobility::PlaneEstimator plane_estimator;
+  ::eigenmath::Vector3f point = {1.0f, 2.0f, 3.0f};
 
   plane_estimator.SetNormalOrientation({0.1f, 0.1f, 0.98f});
 
@@ -128,7 +128,7 @@ TEST(TestPlaneEstimator, CornerCases) {
 }
 
 TEST(TestPlaneEstimator, NoisyPlaneEstimation) {
-  blue::mobility::PlaneEstimator plane_estimator;
+  ::mobility::PlaneEstimator plane_estimator;
   plane_estimator.SetNormalOrientation({0.1f, 0.1f, 0.98f});
   plane_estimator.AddPoint({0.0f, 0.0f, 1.1f}, 1.0f);
   plane_estimator.AddPoint({0.0f, 0.0f, 0.9f}, 1.0f);
@@ -151,7 +151,7 @@ TEST(TestPlaneEstimator, NoisyPlaneEstimation) {
 
 TEST(TestPlaneEstimator, WeightedPlaneEstimation) {
   constexpr float kNoisyEpsilon = 0.04f;
-  blue::mobility::PlaneEstimator plane_estimator;
+  ::mobility::PlaneEstimator plane_estimator;
   plane_estimator.SetNormalOrientation({0.1f, 0.1f, 0.98f});
   plane_estimator.AddPoint({0.0f, 0.0f, 1.1f}, 1.0f);
   plane_estimator.AddPoint({0.0f, 0.0f, 0.9f}, 1.0f);
@@ -175,11 +175,11 @@ TEST(TestPlaneEstimator, WeightedPlaneEstimation) {
 }
 
 TEST(TestPlaneEstimator, AdvancedPlaneMerging) {
-  blue::mobility::PlaneEstimator plane_estimator1, plane_estimator2;
+  ::mobility::PlaneEstimator plane_estimator1, plane_estimator2;
   plane_estimator1.SetNormalOrientation({0.1f, 0.1f, 0.98f});
 
-  blue::mobility::MultichannelCloudBuffer cloud(1, 8);
-  blue::mobility::CloudView<::eigenmath::Vector3f> points =
+  ::mobility::MultichannelCloudBuffer cloud(1, 8);
+  ::mobility::CloudView<::eigenmath::Vector3f> points =
       cloud.GetOrCreatePoints();
 
   points.AtUnsafe(0) = {0.0f, 0.0f, 1.1f};
@@ -201,19 +201,19 @@ TEST(TestPlaneEstimator, AdvancedPlaneMerging) {
   EXPECT_NEAR(plane_estimator1.Plane().normal().z(), 1.0f, kEpsilon);
   EXPECT_NEAR(plane_estimator1.Plane().offset(), -1.0f, kEpsilon);
 
- ::eigenmath::Pose3d frame2_pose_frame1(
-      Eigen::AngleAxisd(M_PI / 2.0,::eigenmath::Vector3d(1.0f, 0.0f, 0.0f))
+  ::eigenmath::Pose3d frame2_pose_frame1(
+      Eigen::AngleAxisd(M_PI / 2.0, ::eigenmath::Vector3d(1.0f, 0.0f, 0.0f))
           .toRotationMatrix(),
-     ::eigenmath::Vector3d(1.0f, 1.0f, 1.0f));
+      ::eigenmath::Vector3d(1.0f, 1.0f, 1.0f));
 
   cloud.TransformInPlace(frame2_pose_frame1);
 
   plane_estimator2.SetNormalOrientation({0.1f, -0.98f, 0.1f});
   plane_estimator2.AddPoints(points);
- ::eigenmath::Vector3f normal2 =
+  ::eigenmath::Vector3f normal2 =
       frame2_pose_frame1.rotationMatrix().cast<float>() *
       plane_estimator1.Plane().normal();
- ::eigenmath::Vector3f centroid2 =
+  ::eigenmath::Vector3f centroid2 =
       frame2_pose_frame1.cast<float>() * plane_estimator1.Centroid();
   EXPECT_TRUE(plane_estimator2.PlaneValid());
   EXPECT_NEAR(plane_estimator2.Centroid().x(), centroid2.x(), kEpsilon);
@@ -226,7 +226,7 @@ TEST(TestPlaneEstimator, AdvancedPlaneMerging) {
   Eigen::Matrix4d frame1_pose_frame2 =
       frame2_pose_frame1.inverse().matrix().cast<double>();
   plane_estimator1.Merge(plane_estimator2,
-                        ::eigenmath::Pose3d(frame1_pose_frame2));
+                         ::eigenmath::Pose3d(frame1_pose_frame2));
   EXPECT_TRUE(plane_estimator1.PlaneValid());
   EXPECT_NEAR(plane_estimator1.Centroid().x(), 0.5f, kEpsilon);
   EXPECT_NEAR(plane_estimator1.Centroid().y(), 0.5f, kEpsilon);
@@ -238,4 +238,4 @@ TEST(TestPlaneEstimator, AdvancedPlaneMerging) {
 }
 
 }  // namespace
-}  // namespace blue::mobility
+}  // namespace mobility

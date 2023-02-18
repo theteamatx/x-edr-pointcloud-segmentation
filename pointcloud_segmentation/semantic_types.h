@@ -1,7 +1,7 @@
 #ifndef GOOGLEX_PROXY_OBJECT_PROPERTIES_VISUAL_VOCABULARIES_SEMANTIC_TYPES_H_
 #define GOOGLEX_PROXY_OBJECT_PROPERTIES_VISUAL_VOCABULARIES_SEMANTIC_TYPES_H_
 
-namespace blue::mobility::semantic {
+namespace mobility::semantic {
 
 // Contains the string that shall be used to represent an object of
 // unknown/unsure class in all modules that deal with detection and object
@@ -20,6 +20,6 @@ inline constexpr char kWall[] = "wall";
 // Contains a string that shall be used for table cells/points.
 inline constexpr char kTable[] = "table";
 
-}  // namespace blue::mobility::semantic
+}  // namespace mobility::semantic
 
 #endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_VISUAL_VOCABULARIES_SEMANTIC_TYPES_H_

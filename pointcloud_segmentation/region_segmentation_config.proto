@@ -16,7 +16,7 @@
 
 syntax = "proto2";
 
-package blue.mobility;
+package mobility;
 
 // Next id: 5
 message ClusterRegionConfigProto {

@@ -1,6 +1,6 @@
 #include "pointcloud_segmentation/detected_objects.h"
 
-namespace blue::mobility {
+namespace mobility {
 
 void CreatePlanarDetectedObjectProto(
     const PlanarRegion<>& planar_region,
@@ -30,4 +30,5 @@ void CreatePlanarDetectedObjectProto(
     }
   }
 }
-}  // namespace blue::mobility
+
+}  // namespace mobility

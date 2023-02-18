@@ -16,7 +16,7 @@
 
 syntax = "proto2";
 
-package blue.mobility;
+package mobility;
 
 // Parameters for classifying horizontal planes.
 // Next id: 6

@@ -20,10 +20,10 @@
 #include <algorithm>
 #include <type_traits>
 
-#include "pointcloud_segmentation/cloud.h"
 #include "google/protobuf/repeated_field.h"
+#include "pointcloud_segmentation/cloud.h"
 
-namespace blue::mobility {
+namespace mobility {
 
 // These helpers are called by the macros below for easier compile checking and
 // better syntax highlighting (and to keep the macros simple).
@@ -65,7 +65,8 @@ CloudView<const T> GetConstCloudViewSingleRow(
 // Memorymaps a mutable view onto a proto repeated field.
 template <typename T, typename ProtoFieldT>
 CloudView<T> GetMutableCloudView(
-    int rows, int cols, ::google::protobuf::RepeatedField<ProtoFieldT>* proto_data) {
+    int rows, int cols,
+    ::google::protobuf::RepeatedField<ProtoFieldT>* proto_data) {
   AssertCloudTypeCompatibility<T, ProtoFieldT>();
   constexpr int field_width = sizeof(T) / sizeof(ProtoFieldT);
 
@@ -131,6 +132,6 @@ void ResizeField(int orig_rows, int orig_cols, int new_rows, int new_cols,
   }
 }
 
-}  // namespace blue::mobility
+}  // namespace mobility
 
 #endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_CLOUD_PROTO_UTILS_H_

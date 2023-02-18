@@ -32,7 +32,7 @@
 #include "pointcloud_segmentation/region_segmentation_config.pb.h"
 #include "pointcloud_segmentation/segmentation.h"
 
-namespace blue::mobility {
+namespace mobility {
 namespace detail {
 
 struct SourceCandidateIndexPair {
@@ -176,6 +176,6 @@ class ClusterRegion {
   std::optional<eigenmath::Vector3f> seed_ = std::nullopt;
 };
 
-}  // namespace blue::mobility
+}  // namespace mobility
 
 #endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_CLUSTER_REGION_H_

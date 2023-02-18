@@ -2,12 +2,12 @@
 
 #include <vector>
 
-#include "eigenmath/matchers.h"
 #include "benchmark/benchmark.h"
+#include "eigenmath/matchers.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-namespace blue::mobility {
+namespace mobility {
 namespace {
 
 using ::eigenmath::testing::IsApprox;
@@ -127,4 +127,4 @@ TEST_CLOUD_TYPE(EigenVector4dFixedSizeVectorizable, Eigen::Vector4d,
 #undef TEST_CLOUD_TYPE
 
 }  // namespace
-}  // namespace blue::mobility
+}  // namespace mobility

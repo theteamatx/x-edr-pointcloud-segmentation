@@ -27,7 +27,7 @@
 #include "eigenmath/types.h"
 #include "pointcloud_segmentation/cloud.h"
 
-namespace blue::mobility {
+namespace mobility {
 
 // All labels >= 0 indicate an assigned region label. These cannot be claimed
 // again. They can be used to index into the regions vector. All other negative
@@ -291,6 +291,6 @@ void SegmentRegions(const typename RegionT::InputData& input_data,
   }
 }
 
-}  // namespace blue::mobility
+}  // namespace mobility
 
 #endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_SEGMENTATION_H_

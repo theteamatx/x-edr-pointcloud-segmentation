@@ -21,7 +21,7 @@
 #include "absl/log/check.h"
 #include "eigenmath/pose3.h"
 
-namespace blue::mobility {
+namespace mobility {
 
 // Options for the Cloud type.
 namespace cloud {
@@ -253,6 +253,6 @@ class CloudView : public Cloud<T, Options> {
   ~CloudView() {}
 };
 
-}  // namespace blue::mobility
+}  // namespace mobility
 
 #endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_CLOUD_H_

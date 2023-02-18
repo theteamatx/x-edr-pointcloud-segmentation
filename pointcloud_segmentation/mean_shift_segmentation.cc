@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace blue::mobility {
+namespace mobility {
 
 internal::PointIndex::PointIndex(int row_in, int col_in) {
   x() = row_in;
@@ -18,4 +18,4 @@ int internal::PointIndex::ColIndex() const { return std::round(Col()); }
 
 int internal::PointIndex::RowIndex() const { return std::round(Row()); }
 
-}  // namespace blue::mobility
+}  // namespace mobility

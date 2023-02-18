@@ -24,7 +24,7 @@
 #include "pointcloud_segmentation/cloud.h"
 #include "pointcloud_segmentation/multichannel_cloud.pb.h"
 
-namespace blue::mobility {
+namespace mobility {
 
 class MultichannelCloudBuffer;
 
@@ -203,6 +203,6 @@ class ConstMultichannelCloudView : public ConstMultichannelCloud {
   ~ConstMultichannelCloudView() {}
 };
 
-}  // namespace blue::mobility
+}  // namespace mobility
 
 #endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_MULTICHANNEL_CLOUD_H_
