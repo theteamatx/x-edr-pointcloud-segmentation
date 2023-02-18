@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_PLANAR_REGION_H_
-#define GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_PLANAR_REGION_H_
+#ifndef MOBILITY_POINT_CLOUD_PLANAR_REGION_H_
+#define MOBILITY_POINT_CLOUD_PLANAR_REGION_H_
 
 #include <cmath>
 #include <map>
@@ -518,4 +518,4 @@ void FindSeedPointsFromLastPlanarRegions(
 
 }  // namespace mobility
 
-#endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_PLANAR_REGION_H_
+#endif  // MOBILITY_POINT_CLOUD_PLANAR_REGION_H_

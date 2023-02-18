@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_INDICES_H_
-#define GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_INDICES_H_
+#ifndef MOBILITY_POINT_CLOUD_INDICES_H_
+#define MOBILITY_POINT_CLOUD_INDICES_H_
 
 #include <type_traits>
 #include <vector>
@@ -97,4 +97,4 @@ inline int GetIndicesSize(const IndexedContainerT& indexed_container,
 
 }  // namespace mobility
 
-#endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_INDICES_H_
+#endif  // MOBILITY_POINT_CLOUD_INDICES_H_

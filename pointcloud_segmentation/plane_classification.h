@@ -17,8 +17,8 @@
 // Provides several simple functions to classify planes geometrically. The
 // current supported classes are Floor, Wall and Coffeetable.
 
-#ifndef GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_PLANE_CLASSIFICATION_H_
-#define GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_PLANE_CLASSIFICATION_H_
+#ifndef MOBILITY_POINT_CLOUD_PLANE_CLASSIFICATION_H_
+#define MOBILITY_POINT_CLOUD_PLANE_CLASSIFICATION_H_
 
 #include <string>
 
@@ -53,4 +53,4 @@ void ClassifyPlane(const PlaneClassificationConfigProto& config,
 
 }  // namespace mobility
 
-#endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_PLANE_CLASSIFICATION_H_
+#endif  // MOBILITY_POINT_CLOUD_PLANE_CLASSIFICATION_H_

@@ -19,8 +19,8 @@
 // Lidar data (range map), we collect the neighboring points into the same
 // cluster by connected-components algorithm. This class is usually used after
 // floor segmentation.
-#ifndef GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_CLUSTER_REGION_H_
-#define GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_CLUSTER_REGION_H_
+#ifndef MOBILITY_POINT_CLOUD_CLUSTER_REGION_H_
+#define MOBILITY_POINT_CLOUD_CLUSTER_REGION_H_
 
 #include <optional>
 #include <queue>
@@ -177,4 +177,4 @@ class ClusterRegion {
 
 }  // namespace mobility
 
-#endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_CLUSTER_REGION_H_
+#endif  // MOBILITY_POINT_CLOUD_CLUSTER_REGION_H_

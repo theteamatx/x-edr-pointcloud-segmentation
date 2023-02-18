@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-#ifndef GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_SEGMENTATION_H_
-#define GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_SEGMENTATION_H_
+#ifndef MOBILITY_POINT_CLOUD_SEGMENTATION_H_
+#define MOBILITY_POINT_CLOUD_SEGMENTATION_H_
 
 #include <algorithm>
 #include <map>
@@ -293,4 +293,4 @@ void SegmentRegions(const typename RegionT::InputData& input_data,
 
 }  // namespace mobility
 
-#endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_SEGMENTATION_H_
+#endif  // MOBILITY_POINT_CLOUD_SEGMENTATION_H_

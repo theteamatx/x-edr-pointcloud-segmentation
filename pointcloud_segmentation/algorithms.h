@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_ALGORITHMS_H_
-#define GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_ALGORITHMS_H_
+#ifndef MOBILITY_POINT_CLOUD_ALGORITHMS_H_
+#define MOBILITY_POINT_CLOUD_ALGORITHMS_H_
 
 #include <algorithm>
 #include <functional>
@@ -683,4 +683,4 @@ double IterativeClosestPoint(const Cloud<PointT>& source,
 
 }  // namespace mobility
 
-#endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_ALGORITHMS_H_
+#endif  // MOBILITY_POINT_CLOUD_ALGORITHMS_H_

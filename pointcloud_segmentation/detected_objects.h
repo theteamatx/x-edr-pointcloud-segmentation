@@ -15,8 +15,8 @@
  */
 
 // Create a struct and proto to store the segmentation result.
-#ifndef GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_DETECTED_OBJECTS_H_
-#define GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_DETECTED_OBJECTS_H_
+#ifndef MOBILITY_POINT_CLOUD_DETECTED_OBJECTS_H_
+#define MOBILITY_POINT_CLOUD_DETECTED_OBJECTS_H_
 
 #include <iterator>
 #include <string>
@@ -81,4 +81,4 @@ void CreatePlanarDetectedObjectProto(
 
 }  // namespace mobility
 
-#endif  // GOOGLEX_PROXY_OBJECT_PROPERTIES_POINT_CLOUD_DETECTED_OBJECTS_H_
+#endif  // MOBILITY_POINT_CLOUD_DETECTED_OBJECTS_H_
