@@ -1,4 +1,4 @@
-#include "googlex/proxy/object_properties/point_cloud/mean_shift_segmentation.h"
+#include "pointcloud_segmentation/mean_shift_segmentation.h"
 
 #include <cmath>
 

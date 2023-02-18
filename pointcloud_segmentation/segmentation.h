@@ -23,9 +23,9 @@
 #include <queue>
 #include <vector>
 
-#include "base/logging.h"
-#include "googlex/proxy/eigenmath/types.h"
-#include "googlex/proxy/object_properties/point_cloud/cloud.h"
+#include "absl/log/check.h"
+#include "eigenmath/types.h"
+#include "pointcloud_segmentation/cloud.h"
 
 namespace blue::mobility {
 

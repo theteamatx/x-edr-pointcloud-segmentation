@@ -1,10 +1,11 @@
-#include "googlex/proxy/object_properties/point_cloud/segmentation.h"
+#include "pointcloud_segmentation/segmentation.h"
 
 #include <vector>
 
-#include "googlex/proxy/object_properties/point_cloud/cloud.h"
-#include "googlex/proxy/object_properties/point_cloud/planar_region.h"
-#include "testing/base/public/gunit.h"
+#include "pointcloud_segmentation/cloud.h"
+#include "pointcloud_segmentation/planar_region.h"
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 namespace blue::mobility {
 

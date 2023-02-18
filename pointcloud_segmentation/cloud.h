@@ -18,10 +18,8 @@
 #include <algorithm>
 #include <vector>
 
-#include "base/logging.h"
-#include "googlex/proxy/eigenmath/pose3.h"
-#include "third_party/eigen3/Eigen/Core"
-#include "third_party/eigen3/Eigen/StdVector"
+#include "absl/log/check.h"
+#include "eigenmath/pose3.h"
 
 namespace blue::mobility {
 

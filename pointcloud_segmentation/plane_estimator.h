@@ -20,10 +20,10 @@
 
 #include <vector>
 
-#include "googlex/proxy/eigenmath/pose3.h"
-#include "googlex/proxy/object_properties/point_cloud/cloud.h"
-#include "googlex/proxy/object_properties/point_cloud/indices.h"
-#include "googlex/proxy/object_properties/point_cloud/proto/plane_estimator.proto.h"
+#include "eigenmath/pose3.h"
+#include "pointcloud_segmentation/cloud.h"
+#include "pointcloud_segmentation/indices.h"
+#include "pointcloud_segmentation/plane_estimator.pb.h"
 
 namespace blue::mobility {
 

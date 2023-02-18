@@ -22,14 +22,11 @@
 #include <utility>
 #include <vector>
 
-#include "googlex/proxy/containers/interval.h"
-#include "googlex/proxy/eigenmath/plane_conversions.h"
-#include "googlex/proxy/eigenmath/pose3.h"
-#include "googlex/proxy/object_properties/point_cloud/indices.h"
-#include "googlex/proxy/object_properties/point_cloud/plane_estimator.h"
-#include "googlex/proxy/textlog/panic.h"
-#include "third_party/eigen3/Eigen/Core"  // IWYU pragma: keep
-#include "util/geometry2d/convex-hull.h"
+#include "eigenmath/plane_conversions.h"
+#include "eigenmath/pose3.h"
+#include "pointcloud_segmentation/indices.h"
+#include "pointcloud_segmentation/plane_estimator.h"
+#include "collision/convex_hull.h"
 
 namespace blue::mobility {
 namespace detail {
@@ -331,7 +328,7 @@ template <typename PointT, typename NormalT>
 void ComputeNormalsOrganized(
     const eigenmath::Pose3d& point_cloud_pose_sensor,
     const Cloud<PointT>& points, Cloud<NormalT>* normals,
-    const blue::Interval<int>& row_range, const blue::Interval<int>& col_range,
+    const std::pair<int, int>& row_range, const std::pair<int, int>& col_range,
     const ComputeNormalsParams& params = ComputeNormalsParams()) {
   constexpr float kInvalidValue = std::numeric_limits<float>::quiet_NaN();
 
@@ -339,8 +336,8 @@ void ComputeNormalsOrganized(
   std::vector<int> neighbor_indices;
 
   // Iterating over the entire index vector
-  for (int col = col_range.min(); col < col_range.max(); ++col) {
-    for (int row = row_range.min(); row < row_range.max(); ++row) {
+  for (int col = col_range.first; col < col_range.second; ++col) {
+    for (int row = row_range.first; row < row_range.second; ++row) {
       const auto& point = points.AtUnsafe(row, col);
       auto& normal = normals->AtUnsafe(row, col);
       if (!point.allFinite() ||
@@ -372,8 +369,8 @@ void ComputeNormalsOrganized(
     const Cloud<PointT>& points, Cloud<NormalT>* normals,
     const ComputeNormalsParams& params = ComputeNormalsParams()) {
   ComputeNormalsOrganized(point_cloud_pose_sensor, points, normals,
-                          blue::Interval<int>(0, points.Rows()),
-                          blue::Interval<int>(0, points.Cols()), params);
+                          {0, points.Rows()},
+                          {0, points.Cols()}, params);
 }
 
 // Ear-clipping triangulation for concave polygons. The output triangles have
@@ -531,18 +528,17 @@ void PlanarConvexHull(const Cloud<PointT1>& points, const IndicesT& indices,
                       CloudBuffer<PointT2>* convex_hull_points) {
   eigenmath::Pose3f world_pose_plane = eigenmath::PoseFromPlane(plane);
   eigenmath::Pose3f plane_pose_world = world_pose_plane.inverse();
-  std::vector<R2Point> plane_points(GetIndicesSize(points, indices));
+  std::vector<eigenmath::Vector2d> plane_points(
+      GetIndicesSize(points, indices));
   for (int i = 0; i < GetIndicesSize(points, indices); ++i) {
     const auto& boundary_point = points.AtUnsafe(GetIndex(i, indices));
     eigenmath::Vector3f plane_point = plane_pose_world * boundary_point;
     plane_points[i] = {plane_point.x(), plane_point.y()};
   }
 
-  geometry2d::ConvexHull convex_hull;
-  std::vector<R2Point> convex_plane_points;
-  convex_hull.Compute(&plane_points, &convex_plane_points);
-  convex_hull_points->Resize(1, convex_plane_points.size());
-
+  ::mobility::collision::ConvexHull convex_hull(plane_points);
+  std::vector<eigenmath::Vector2d> convex_plane_points =
+      convex_hull.GetPoints();
   for (int i = 0; i < convex_plane_points.size(); ++i) {
     PointT2& convex_hull_point = convex_hull_points->AtUnsafe(i);
     eigenmath::Vector3f plane_point(convex_plane_points[i].x(),
@@ -557,7 +553,7 @@ template <typename PointT, typename Scalar>
 bool ComputeRigidTransform(const Cloud<PointT>& source,
                            const Cloud<PointT>& dest,
                            eigenmath::Pose3<Scalar>* dest_pose_source) {
-  BLUE_CHECK(source.size() == dest.size());
+  CHECK_EQ(source.size(), dest.size());
   const int num_points = source.size();
 
   // Compute the centroids of the two point clouds. The optimal translation is
@@ -630,7 +626,7 @@ void NearestNeighbors(const Cloud<PointT>& source, const Cloud<PointT>& dest,
     }
     (*indices)[source_col] = closest_point;
   }
-  BLUE_CHECK(indices->size() == source.size());
+  CHECK(indices->size() == source.size());
 }
 
 // Finds the best-fit transform that maps a source point cloud to a destination
@@ -660,7 +656,7 @@ double IterativeClosestPoint(const Cloud<PointT>& source,
     // Estimate the combination of rotation and translation using a root mean
     // square point to point distance metric minimizer.
     eigenmath::Pose3f dest_pose_transformed_source;
-    BLUE_CHECK(ComputeRigidTransform(transformed_source, neighbor_cloud,
+    CHECK(ComputeRigidTransform(transformed_source, neighbor_cloud,
                                      &dest_pose_transformed_source));
 
     // Transform the source points using the obtained transformation.

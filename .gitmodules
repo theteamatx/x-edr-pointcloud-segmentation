@@ -1,0 +1,12 @@
+[submodule "third_party/eigenmath"]
+	path = third_party/eigenmath
+	url = sso://user/marioprats/eigenmath
+[submodule "third_party/mobility-collision"]
+	path = third_party/mobility-collision
+	url = sso://user/mpersson/mobility-collision
+[submodule "third_party/mobility-diff-drive"]
+	path = third_party/mobility-diff-drive
+	url = sso://user/mpersson/mobility-diff-drive
+[submodule "third_party/genit"]
+	path = third_party/genit
+	url = sso://user/mpersson/genit

@@ -1,0 +1,83 @@
+/*
+ * Copyright 2023 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package blue.mobility;
+
+import "eigenmath/eigenmath.proto";
+
+// Plane3dProto represents a plane. x,y,z is a point in the plane and nx,ny,nz
+// is the normal to the plane. Both the point and the normal are specified in
+// the same frame, which must be identified in a comment wherever the Plane3
+// message is used. The case of nx==ny==nz==0 is invalid. The normal nx,ny,nz
+// should be always a unit normal.
+// Next id: 7
+message Plane3dProto {
+  // point [m].
+  double x = 1;
+  double y = 2;
+  double z = 3;
+
+  // Normal.
+  double nx = 4;
+  double ny = 5;
+  double nz = 6;
+}
+
+// Next id: 5
+message PlanarGeometryProto {
+  // The inlier points that are used to generate the 3D fitting plane. That
+  // means the inlier points are not necessary on the plane. These points are in
+  // the frame defined by DetectedObjectsProto.header.frame_id.
+  repeated float points_xyz = 1;
+  // The centroid of the 3D plane in the frame defined by
+  // DetectedObjectsProto.header.frame_id.  The centroid of the inlier points
+  // are not necessary on the plane.
+  eigenmath.Vector3dProto centroid = 2;
+  // The representation of the 3D fitting plane of the inlier points.
+  Plane3dProto plane = 3;
+  // The indices in points_xyz of points that are geometrically discontinuous
+  // from their neighbors.
+  repeated int32 discontinuous_boundary_indices = 4;
+}
+
+// Next id: 2
+message ClusterGeometryProto {
+  // The inlier points in the frame defined by
+  // DetectedObjectsProto.header.frame_id.
+  repeated float points_xyz = 1;
+}
+
+// Next id: 4
+message DetectedObjectProto {
+  // The object_class should be set as a specific class, such as floor, wall,
+  // table once we have classification in the segmentation module.
+  string object_class = 1;
+  // We may have other geometries later. Using oneof here for future extension.
+  oneof geometry {
+    PlanarGeometryProto planar_geometry = 2;
+    ClusterGeometryProto cluster_geometry = 3;
+  }
+}
+
+// This proto contains the result of segmentation module, which is planes and
+// clusters at this point.
+// Next id: 2
+message DetectedObjectsProto {
+  // A vector containing all the detected objects in the sensor frame.
+  repeated DetectedObjectProto detected_objects = 1;
+}

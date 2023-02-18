@@ -1,16 +1,16 @@
-#include "googlex/proxy/object_properties/point_cloud/cloud.h"
+#include "pointcloud_segmentation/cloud.h"
 
 #include <vector>
 
-#include "googlex/proxy/eigenmath/matchers.h"
-#include "testing/base/public/benchmark.h"
-#include "testing/base/public/gmock.h"
-#include "testing/base/public/gunit.h"
+#include "eigenmath/matchers.h"
+#include "benchmark/benchmark.h"
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 namespace blue::mobility {
 namespace {
 
-using ::blue::eigenmath::testing::IsApprox;
+using ::eigenmath::testing::IsApprox;
 using ::testing::Eq;
 using ::testing::NanSensitiveDoubleEq;
 using ::testing::NanSensitiveFloatEq;

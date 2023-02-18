@@ -23,20 +23,19 @@
 #include <string>
 #include <vector>
 
-#include "googlex/proxy/eigenmath/scalar_utils.h"
-#include "googlex/proxy/eigenmath/types.h"
-#include "googlex/proxy/object_properties/point_cloud/algorithms.h"
-#include "googlex/proxy/object_properties/point_cloud/cloud.h"
-#include "googlex/proxy/object_properties/point_cloud/plane_estimator.h"
-#include "googlex/proxy/object_properties/point_cloud/region_segmentation_config.proto.h"
-#include "googlex/proxy/object_properties/point_cloud/segmentation.h"
-#include "googlex/proxy/object_properties/visual_vocabularies/semantic_types.h"
-#include "third_party/absl/container/flat_hash_set.h"
-#include "util/math/mathutil.h"
+#include "eigenmath/scalar_utils.h"
+#include "eigenmath/types.h"
+#include "pointcloud_segmentation/algorithms.h"
+#include "pointcloud_segmentation/cloud.h"
+#include "pointcloud_segmentation/plane_estimator.h"
+#include "pointcloud_segmentation/region_segmentation_config.pb.h"
+#include "pointcloud_segmentation/segmentation.h"
+#include "pointcloud_segmentation/semantic_types.h"
+#include "absl/container/flat_hash_set.h"
 
 namespace blue::mobility {
 
-enum class PlaneClass : int { Unknown = 0, Floor, Wall, Coffeetable };
+enum class PlaneClass : int { kUnknown = 0, kFloor, kWall, kTable };
 
 namespace detail {
 
@@ -87,8 +86,6 @@ template <typename PointT = eigenmath::Vector3f,
           typename NormalT = eigenmath::Vector3f>
 class PlanarRegion {
  public:
-  enum class PlaneClass : int { Unknown = 0, Floor, Wall, Coffeetable };
-
   // Check if the ConfigProto has been initialized, if not use default
   // values.
   static void ApplyDefaultConfigValues(PlanarRegionConfigProto* config) {
@@ -270,13 +267,13 @@ class PlanarRegion {
 
   std::string PlaneClassName() const {
     switch (plane_class()) {
-      case PlaneClass::Floor:
+      case PlaneClass::kFloor:
         return semantic::kFloor;
-      case PlaneClass::Wall:
+      case PlaneClass::kWall:
         return semantic::kWall;
-      case PlaneClass::Coffeetable:
-        return "coffeetable";
-      case PlaneClass::Unknown:
+      case PlaneClass::kTable:
+        return semantic::kTable;
+      case PlaneClass::kUnknown:
         return semantic::kUnknownClass;
     }
     return semantic::kUnknownClass;
@@ -462,7 +459,7 @@ class PlanarRegion {
   std::vector<int> boundary_indices_;
   absl::flat_hash_set<int> discontinuous_boundary_indices_;
   CloudBuffer<eigenmath::Vector3f> projected_boundary_points_;
-  PlaneClass plane_class_ = PlaneClass::Unknown;
+  PlaneClass plane_class_ = PlaneClass::kUnknown;
 };
 
 // Finds seed points near the centroids of the set of previous planar regions.

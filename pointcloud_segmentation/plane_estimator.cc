@@ -1,10 +1,9 @@
-#include "googlex/proxy/object_properties/point_cloud/plane_estimator.h"
+#include "pointcloud_segmentation/plane_estimator.h"
 
 #include <limits>
 #include <vector>
 
-#include "base/logging.h"
-#include "third_party/eigen3/Eigen/Eigenvalues"
+#include "absl/log/check.h"
 
 namespace blue::mobility {
 

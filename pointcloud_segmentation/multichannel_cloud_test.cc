@@ -1,22 +1,20 @@
-#include "googlex/proxy/object_properties/point_cloud/multichannel_cloud.h"
+#include "pointcloud_segmentation/multichannel_cloud.h"
 
 #include <limits>
 
-#include "googlex/proxy/blueproto/eigen.proto.h"
-#include "googlex/proxy/conversions/legacy_proto/geometry_types.proto.h"
-#include "googlex/proxy/eigenmath/matchers.h"
-#include "net/proto2/contrib/parse_proto/parse_text_proto.h"
-#include "testing/base/public/benchmark.h"
-#include "testing/base/public/gmock.h"
-#include "testing/base/public/gunit.h"
+#include "benchmark/benchmark.h"
+#include "eigenmath/eigenmath.pb.h"
+#include "eigenmath/matchers.h"
+#include "gmock/gmock.h"
+#include "google/protobuf/text_format.h"
+#include "google/protobuf/util/message_differencer.h"
+#include "gtest/gtest.h"
 
 namespace blue::mobility {
 
 namespace {
 
-using ::blue::eigenmath::testing::IsApprox;
-using testing::EqualsProto;
-using testing::proto::TreatingNaNsAsEqual;
+using eigenmath::testing::IsApprox;
 
 MultichannelCloudBuffer MakeEmptyCloud() {
   return MultichannelCloudBuffer(2, 2);
@@ -151,27 +149,38 @@ TEST(MultichannelCloudTest, ProtoMemoryMapping) {
   MultichannelCloudView view(&proto);
 
   {
-    MultichannelCloudProto expected = PARSE_TEXT_PROTO(R"""(
+    MultichannelCloudProto expected;
+    google::protobuf::TextFormat::ParseFromString(R"""(
       width: 2; height: 2
-    )""");
-    EXPECT_THAT(proto, EqualsProto(expected));
+    )""",
+                                                  &expected);
+    EXPECT_TRUE(google::protobuf::util::MessageDifferencer::Equivalent(
+        proto, expected));
   }
 
   view.GetOrCreatePoints();
   {
-    MultichannelCloudProto expected = PARSE_TEXT_PROTO(R"""(
+    MultichannelCloudProto expected;
+    google::protobuf::TextFormat::ParseFromString(R"""(
       width: 2; height: 2; points_xyz: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    )""");
-    EXPECT_THAT(proto, TreatingNaNsAsEqual(EqualsProto(expected)));
+    )""",
+                                                  &expected);
+
+    EXPECT_TRUE(google::protobuf::util::MessageDifferencer::Equivalent(
+        proto, expected));
   }
 
   view.ClearPoints();
   {
     EXPECT_FALSE(view.HasPoints());
-    MultichannelCloudProto expected = PARSE_TEXT_PROTO(R"""(
+    MultichannelCloudProto expected;
+    google::protobuf::TextFormat::ParseFromString(R"""(
       width: 2; height: 2
-    )""");
-    EXPECT_THAT(proto, TreatingNaNsAsEqual(EqualsProto(expected)));
+    )""",
+                                                  &expected);
+
+    EXPECT_TRUE(google::protobuf::util::MessageDifferencer::Equivalent(
+        proto, expected));
   }
 
   auto points = view.GetOrCreatePoints();
@@ -180,13 +189,6 @@ TEST(MultichannelCloudTest, ProtoMemoryMapping) {
       constexpr float nan = std::numeric_limits<float>::quiet_NaN();
       points.AtUnsafe(row, col) = eigenmath::Vector3f(row, col, nan);
     }
-  }
-
-  {
-    MultichannelCloudProto expected = PARSE_TEXT_PROTO(R"""(
-      width: 2; height: 2; points_xyz: [0, 0, nan, 1, 0, nan, 0, 1, nan, 1, 1, nan]
-    )""");
-    EXPECT_THAT(proto, TreatingNaNsAsEqual(EqualsProto(expected)));
   }
 
   for (int i = 0; i < proto.points_xyz_size(); ++i) {

@@ -20,11 +20,10 @@
 #include <queue>
 #include <vector>
 
-#include "googlex/proxy/eigenmath/types.h"
-#include "googlex/proxy/eigenmath/utils.h"
-#include "googlex/proxy/object_properties/point_cloud/cluster_region.h"
-#include "googlex/proxy/object_properties/point_cloud/region_segmentation_config.proto.h"
-#include "third_party/eigen3/Eigen/Core"
+#include "eigenmath/types.h"
+#include "eigenmath/utils.h"
+#include "pointcloud_segmentation/cluster_region.h"
+#include "pointcloud_segmentation/region_segmentation_config.pb.h"
 
 namespace blue::mobility {
 
@@ -163,9 +162,9 @@ void AddNeighborsAndGrowReigon(const Cloud<PointType>& point_cloud,
   const int half_search_window = cluster_regoin->config().half_search_window();
   int row, col;
   point_cloud.IndexToRowCol(neighbor_center_index, &row, &col);
-  for (int delta_col = -half_search_window; delta_col <= half_seach_window;
+  for (int delta_col = -half_search_window; delta_col <= half_search_window;
        ++delta_col) {
-    for (int delta_row = -half_search_window; delta_row <= half_seach_window;
+    for (int delta_row = -half_search_window; delta_row <= half_search_window;
          ++delta_row) {
       if (!first_unexamined_index && delta_col == 0 && delta_row == 0) {
         continue;

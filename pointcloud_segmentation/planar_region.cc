@@ -1,4 +1,4 @@
-#include "googlex/proxy/object_properties/point_cloud/planar_region.h"
+#include "pointcloud_segmentation/planar_region.h"
 
 #include <algorithm>
 #include <limits>

@@ -1,15 +1,24 @@
+/*
+ * Copyright 2023 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 syntax = "proto3";
 
 package blue.mobility;
 
-import "googlex/proxy/blueproto/eigen.proto";
-import "googlex/proxy/conversions/legacy_proto/geometry_types.proto";
-import "googlex/proxy/conversions/legacy_proto/header.proto";
-import "googlex/proxy/module_system/core/message_header.proto";
-import "third_party/robotics/logging/proto_options.proto";
-
-option java_outer_classname = "MultichannelCloudProtos";
-option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";  // See http://go/go-api-flag.
+import "eigenmath/eigenmath.proto";
 
 // MultichannelCloudProto implements an organized (height > 1) or unorganized
 // (height==1) point cloud, similar to a PCL point cloud. If the point cloud is
@@ -22,11 +31,9 @@ option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";  // See http://go/go-api-flag.
 // are represented by NaN's.
 // NextID: 17
 message MultichannelCloudProto {
-  // The message header.
-  common.MessageHeaderProto header = 10;
   // Pose of the sensor in the point cloud frame. If the point cloud frame is
   // the sensor frame, this should be the identity
-  blue.Pose3dProto point_cloud_pose_sensor = 12;
+  eigenmath.Pose3dProto point_cloud_pose_sensor = 12;
   // Width of the point cloud
   int32 width = 3;
   // Height of the point cloud (unorganized point clouds have a height of 1)
@@ -34,40 +41,25 @@ message MultichannelCloudProto {
 
   // (Required) Coordinates stored columnwise in xyzxyzxyz order.
   // Size: width * height * 3
-  repeated float points_xyz = 7
-      [(.robotics.logging.drop_from_capacitor_export) = true];
+  repeated float points_xyz = 7;
   // Point normals stored columnwise in xyzxyzxyz order.
   // Size: width * height * 3
-  repeated float normals_xyz = 8
-      [(.robotics.logging.drop_from_capacitor_export) = true];
+  repeated float normals_xyz = 8;
   // Point intensities stored columnwise.
   // Size: width * height
-  repeated float intensities = 9
-      [(.robotics.logging.drop_from_capacitor_export) = true];
+  repeated float intensities = 9;
   // Point color values between 0 and 1 stored columnwise in rgbrgbrgb order.
   // Size: width * height * 3
-  repeated float colors_rgb_f = 11
-      [(.robotics.logging.drop_from_capacitor_export) = true];
+  repeated float colors_rgb_f = 11;
 
   // CBr origin (x,y,z) for each points on the [width * height] point cloud.
   // Coordinates stored columnwise in xyzxyzxyz order.
   // Size: width * height * 3.
-  repeated float cbr_origins = 13
-      [(.robotics.logging.drop_from_capacitor_export) = true];
+  repeated float cbr_origins = 13;
   // CBr attribute fields for each point on the [width * height] point cloud.
   // Size : width * height * 3  (due to each shot having up to 3 returns).
-  repeated float return_pulse_widths = 14
-      [(.robotics.logging.drop_from_capacitor_export) = true];
-  repeated float return_intensities = 15
-      [(.robotics.logging.drop_from_capacitor_export) = true];
-  repeated float return_ranges = 16
-      [(.robotics.logging.drop_from_capacitor_export) = true];
+  repeated float return_pulse_widths = 14;
+  repeated float return_intensities = 15;
+  repeated float return_ranges = 16;
 
-  reserved "points", "normals";
-  reserved 5, 6;
-
-  // Deprecated fields with existing logs.
-  legacy_proto.Header deprecated_header = 1 [deprecated = true];
-  legacy_proto.Pose3D deprecated_point_cloud_pose_sensor = 2
-      [deprecated = true];
 }

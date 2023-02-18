@@ -1,26 +1,23 @@
-#include "googlex/proxy/object_properties/point_cloud/algorithms.h"
+#include "pointcloud_segmentation/algorithms.h"
 
 #include <vector>
 
-#include "devtools/build/runtime/get_runfiles_dir.h"
-#include "file/base/helpers.h"
-#include "googlex/proxy/eigenmath/matchers.h"
-#include "googlex/proxy/eigenmath/pose3.h"
-#include "googlex/proxy/eigenmath/pose3_utils.h"
-#include "googlex/proxy/eigenmath/so3.h"
-#include "googlex/proxy/eigenmath/types.h"
-#include "googlex/proxy/object_properties/point_cloud/cloud.h"
-#include "googlex/proxy/object_properties/point_cloud/multichannel_cloud.h"
-#include "googlex/proxy/object_properties/point_cloud/multichannel_cloud.proto.h"
-#include "testing/base/public/benchmark.h"
-#include "testing/base/public/gmock.h"
-#include "testing/base/public/gunit.h"
-#include "util/math/mathutil.h"
+#include "eigenmath/matchers.h"
+#include "eigenmath/pose3.h"
+#include "eigenmath/pose3_utils.h"
+#include "eigenmath/so3.h"
+#include "eigenmath/types.h"
+#include "pointcloud_segmentation/cloud.h"
+#include "pointcloud_segmentation/multichannel_cloud.h"
+#include "pointcloud_segmentation/multichannel_cloud.pb.h"
+#include "benchmark/benchmark.h"
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 namespace blue::mobility {
 namespace {
 
-using ::blue::eigenmath::testing::IsApprox;
+using ::eigenmath::testing::IsApprox;
 using ::testing::Message;
 
 constexpr float kEpsilon = 1.0e-4f;
@@ -416,37 +413,6 @@ TYPED_TEST(AlgorithmsTest, ComputeRigidTransform) {
   eigenmath::Pose3<TypeParam> b_pose_a_computed;
   ASSERT_TRUE(ComputeRigidTransform(cloud_a, cloud_b, &b_pose_a_computed));
   EXPECT_THAT(b_pose_a_computed, IsApprox(b_pose_a, 1e-5));
-}
-
-TEST(ComputeNormalsOrganizedTest, AllValidNormalsAreNormalized) {
-  ASSERT_OK_AND_ASSIGN(auto cloud_proto,
-                       file::GetBinaryProto<MultichannelCloudProto>(
-                           devtools_build::GetDataDependencyFilepath(
-                               "google3/googlex/proxy/object_properties/"
-                               "point_cloud/testdata/"
-                               "cbr_multichannel_cloud_proto.pb"),
-                           file::Defaults()));
-
-  MultichannelCloudView cloud_view(&cloud_proto);
-  const auto points = cloud_view.GetPoints();
-  CloudView<eigenmath::Vector3f> normals = cloud_view.GetOrCreateNormals();
-
-  // Compute the normals for each point.
-  ComputeNormalsOrganized(cloud_view.PointCloudPoseSensor(), points, &normals);
-
-  // Verify that for each finite point and normal, the normal vector is
-  // normalized.
-  for (int col = 0; col < cloud_view.Cols(); ++col) {
-    for (int row = 0; row < cloud_view.Rows(); ++row) {
-      const eigenmath::Vector3f normal = normals.AtUnsafe(row, col);
-      if (!points.AtUnsafe(row, col).allFinite() || !normal.allFinite())
-        continue;
-
-      SCOPED_TRACE(Message() << "Col: " << col << " Row: " << row);
-      EXPECT_TRUE(MathUtil::AlmostEquals(normal.squaredNorm(), 1.0f))
-          << normal.squaredNorm();
-    }
-  }
 }
 
 }  // namespace

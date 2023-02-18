@@ -1,42 +1,17 @@
-#include "googlex/proxy/object_properties/point_cloud/multichannel_cloud.h"
+#include "pointcloud_segmentation/multichannel_cloud.h"
 
 #include <string>
 
-#include "googlex/proxy/conversions/conversions.h"
-#include "googlex/proxy/module_system/core/message_header.proto.h"
-#include "googlex/proxy/object_properties/point_cloud/cloud_proto_utils.h"
+#include "eigenmath/conversions.h"
+#include "pointcloud_segmentation/cloud_proto_utils.h"
 
 namespace blue::mobility {
-
-RobotTime ConstMultichannelCloud::Timestamp() const {
-  return RobotClock::FromNSec(const_proto_->header().timestamp());
-}
-
-void MultichannelCloud::SetTimestamp(const RobotTime& timestamp) {
-  proto_->mutable_header()->set_timestamp(RobotClock::ToNSec(timestamp));
-}
-
-std::string ConstMultichannelCloud::FrameId() const {
-  return const_proto_->header().frame_id();
-}
-
-void MultichannelCloud::SetFrameId(absl::string_view frame_id) {
-  proto_->mutable_header()->set_frame_id(frame_id);
-}
-
-int64_t ConstMultichannelCloud::SequenceNumber() const {
-  return const_proto_->header().sequence_number();
-}
-
-void MultichannelCloud::SetSequenceNumber(int64_t sequence_number) {
-  proto_->mutable_header()->set_sequence_number(sequence_number);
-}
 
 eigenmath::Pose3d ConstMultichannelCloud::PointCloudPoseSensor() const {
   eigenmath::Pose3d point_cloud_pose_sensor;
   if (const_proto_->has_point_cloud_pose_sensor()) {
     point_cloud_pose_sensor =
-        conversions::PoseFromProto(const_proto_->point_cloud_pose_sensor());
+        eigenmath::conversions::PoseFromProto(const_proto_->point_cloud_pose_sensor());
   }
   return point_cloud_pose_sensor;
 }
@@ -44,7 +19,7 @@ eigenmath::Pose3d ConstMultichannelCloud::PointCloudPoseSensor() const {
 void MultichannelCloud::SetPointCloudPoseSensor(
     const eigenmath::Pose3d& point_cloud_pose_sensor) {
   *proto_->mutable_point_cloud_pose_sensor() =
-      conversions::ProtoFromPose(point_cloud_pose_sensor);
+      eigenmath::conversions::ProtoFromPose(point_cloud_pose_sensor);
 }
 
 MultichannelCloudBuffer ConstMultichannelCloud::Transform(

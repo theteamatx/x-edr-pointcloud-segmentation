@@ -19,11 +19,10 @@
 
 #include <string>
 
-#include "googlex/proxy/clock/robot_clock.h"
-#include "googlex/proxy/eigenmath/pose3.h"
-#include "googlex/proxy/eigenmath/types.h"
-#include "googlex/proxy/object_properties/point_cloud/cloud.h"
-#include "googlex/proxy/object_properties/point_cloud/multichannel_cloud.proto.h"
+#include "eigenmath/pose3.h"
+#include "eigenmath/types.h"
+#include "pointcloud_segmentation/cloud.h"
+#include "pointcloud_segmentation/multichannel_cloud.pb.h"
 
 namespace blue::mobility {
 
@@ -35,15 +34,6 @@ class MultichannelCloudBuffer;
 // C++ code, e.g., stereo cameras with RGB, 3d lidar with intensity.
 class ConstMultichannelCloud {
  public:
-  // Returns timestamp of the cloud (by value).
-  RobotTime Timestamp() const;
-
-  // Returns FrameId of the cloud (by value).
-  std::string FrameId() const;
-
-  // Returns SequenceNumber of the cloud (by value).
-  int64_t SequenceNumber() const;
-
   // Dimensions of the cloud.
   int Cols() const { return const_proto_->width(); }
   int Rows() const { return const_proto_->height(); }
@@ -109,15 +99,6 @@ class ConstMultichannelCloud {
 // e.g. stereo cameras with RGB, 3d lidar with intensity
 class MultichannelCloud : public ConstMultichannelCloud {
  public:
-  // Returns timestamp of the cloud (by value).
-  void SetTimestamp(const RobotTime& timestamp);
-
-  // Returns FrameId of the cloud (by value).
-  void SetFrameId(absl::string_view frame_id);
-
-  // Returns SequenceNumber of the cloud (by value).
-  void SetSequenceNumber(int64_t sequence_number);
-
   // Returns underlying proto.
   using ConstMultichannelCloud::Proto;
   MultichannelCloudProto* Proto() { return proto_; }

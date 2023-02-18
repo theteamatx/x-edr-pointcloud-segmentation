@@ -22,9 +22,9 @@
 
 #include <string>
 
-#include "googlex/proxy/eigenmath/types.h"
-#include "googlex/proxy/object_properties/point_cloud/planar_region.h"
-#include "googlex/proxy/object_properties/point_cloud/plane_classification_config.proto.h"
+#include "eigenmath/types.h"
+#include "pointcloud_segmentation/planar_region.h"
+#include "pointcloud_segmentation/plane_classification_config.pb.h"
 
 namespace blue::mobility {
 

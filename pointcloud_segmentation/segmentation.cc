@@ -1,4 +1,4 @@
-#include "googlex/proxy/object_properties/point_cloud/segmentation.h"
+#include "pointcloud_segmentation/segmentation.h"
 
 namespace blue::mobility {
 

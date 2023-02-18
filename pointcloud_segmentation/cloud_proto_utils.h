@@ -20,8 +20,8 @@
 #include <algorithm>
 #include <type_traits>
 
-#include "googlex/proxy/object_properties/point_cloud/cloud.h"
-#include "net/proto2/public/repeated_field.h"
+#include "pointcloud_segmentation/cloud.h"
+#include "google/protobuf/repeated_field.h"
 
 namespace blue::mobility {
 
@@ -41,7 +41,7 @@ struct AssertCloudTypeCompatibility {
 template <typename T, typename ProtoFieldT>
 CloudView<const T> GetConstCloudView(
     int rows, int cols,
-    const ::proto2::RepeatedField<ProtoFieldT>* proto_data) {
+    const ::google::protobuf::RepeatedField<ProtoFieldT>* proto_data) {
   AssertCloudTypeCompatibility<const T, ProtoFieldT>();
   constexpr int field_width = sizeof(T) / sizeof(ProtoFieldT);
 
@@ -56,7 +56,7 @@ CloudView<const T> GetConstCloudView(
 // Memorymaps a const view as a single row onto a proto repeated field.
 template <typename T, typename ProtoFieldT>
 CloudView<const T> GetConstCloudViewSingleRow(
-    const ::proto2::RepeatedField<ProtoFieldT>* proto_data) {
+    const ::google::protobuf::RepeatedField<ProtoFieldT>* proto_data) {
   constexpr int field_width = sizeof(T) / sizeof(ProtoFieldT);
   CHECK_EQ(proto_data->size() % field_width, 0);
   return GetConstCloudView<T>(1, proto_data->size() / field_width, proto_data);
@@ -65,7 +65,7 @@ CloudView<const T> GetConstCloudViewSingleRow(
 // Memorymaps a mutable view onto a proto repeated field.
 template <typename T, typename ProtoFieldT>
 CloudView<T> GetMutableCloudView(
-    int rows, int cols, ::proto2::RepeatedField<ProtoFieldT>* proto_data) {
+    int rows, int cols, ::google::protobuf::RepeatedField<ProtoFieldT>* proto_data) {
   AssertCloudTypeCompatibility<T, ProtoFieldT>();
   constexpr int field_width = sizeof(T) / sizeof(ProtoFieldT);
 
@@ -80,7 +80,7 @@ CloudView<T> GetMutableCloudView(
 // Memorymaps a mutable view as a single row onto a proto repeated field.
 template <typename T, typename ProtoFieldT>
 CloudView<const T> GetMutableCloudViewSingleRow(
-    ::proto2::RepeatedField<ProtoFieldT>* proto_data) {
+    ::google::protobuf::RepeatedField<ProtoFieldT>* proto_data) {
   constexpr int field_width = sizeof(T) / sizeof(ProtoFieldT);
   CHECK_EQ(proto_data->size() % field_width, 0);
   return GetMutableCloudView<T>(1, proto_data->size() / field_width,
@@ -92,7 +92,7 @@ CloudView<const T> GetMutableCloudViewSingleRow(
 template <typename T, typename ProtoFieldT>
 CloudView<T> GetOrCreateCloudView(
     int rows, int cols, ProtoFieldT default_value,
-    ::proto2::RepeatedField<ProtoFieldT>* proto_data) {
+    ::google::protobuf::RepeatedField<ProtoFieldT>* proto_data) {
   AssertCloudTypeCompatibility<T, ProtoFieldT>();
   constexpr int field_width = sizeof(T) / sizeof(ProtoFieldT);
 
@@ -107,7 +107,7 @@ CloudView<T> GetOrCreateCloudView(
 // Resizes a field and copies elements over according to row/column access.
 template <typename T, typename ProtoFieldT>
 void ResizeField(int orig_rows, int orig_cols, int new_rows, int new_cols,
-                 ::proto2::RepeatedField<ProtoFieldT>* proto_data) {
+                 ::google::protobuf::RepeatedField<ProtoFieldT>* proto_data) {
   if (proto_data->empty()) {
     return;
   }
