@@ -70,7 +70,6 @@ class ClusterRegion {
     ApplyDefaultConfigValues(&config_);
   }
 
-  // TODO(b/157687952) Add more advanced initialization here for clustering
   void Init(const InputData& in_data, int seed_point_index,
             std::queue<NeighborType>* unexamined_point_indices) {
     inlier_indices_.clear();

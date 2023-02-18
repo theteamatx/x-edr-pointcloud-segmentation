@@ -84,8 +84,8 @@ struct SeedPointAndIndex {
   PointIndex index;
 };
 
-// TODO(b/138958112) Add Gaussian Kernel.
 // One type of kernel for the seed point weighting.
+// Note that we can also add other type of kernels. e.g. Gaussian Kernel.
 template <typename PointType>
 const eigenmath::VectorXd FlatKernelWeights(
     const std::vector<SeedPointAndIndex<PointType>>& neighbors_shift) {
