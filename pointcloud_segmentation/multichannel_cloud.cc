@@ -99,7 +99,7 @@ DEFINE_ACCESSORS(Points, points_xyz, eigenmath::Vector3f, float);
 DEFINE_ACCESSORS(Normals, normals_xyz, eigenmath::Vector3f, float);
 DEFINE_ACCESSORS(Intensities, intensities, float, float);
 DEFINE_ACCESSORS(Colors, colors_rgb_f, eigenmath::Vector3f, float);
-DEFINE_ACCESSORS(CbrOrigins, cbr_origins, eigenmath::Vector3f, float);
+DEFINE_ACCESSORS(SensorOrigins, sensor_origins, eigenmath::Vector3f, float);
 DEFINE_ACCESSORS(ReturnPulseWidths, return_pulse_widths, eigenmath::Vector3f,
                  float);
 DEFINE_ACCESSORS(ReturnIntensities, return_intensities, eigenmath::Vector3f,
@@ -114,7 +114,7 @@ void MultichannelCloud::Resize(int rows, int cols) {
   ResizeNormals(rows, cols);
   ResizeIntensities(rows, cols);
   ResizeColors(rows, cols);
-  ResizeCbrOrigins(rows, cols);
+  ResizeSensorOrigins(rows, cols);
   ResizeReturnPulseWidths(rows, cols);
   ResizeReturnIntensities(rows, cols);
   ResizeReturnRanges(rows, cols);

@@ -35,6 +35,8 @@
 
 namespace mobility {
 
+constexpr int kNSkipCycles = 4;
+
 enum class PlaneClass : int { kUnknown = 0, kFloor, kWall, kTable };
 
 namespace detail {
@@ -353,8 +355,8 @@ class PlanarRegion {
       // Check if there is a geometric discontinuity between current point & its
       // neighbors in other regions.
 
-      // Only for points within 4 meters of the robot and outside the first
-      // couple of CBr rings to avoid noise due to skewing points.
+      // Only for points within n cycles of the robot and outside the first
+      // couple of sensor scans to avoid noise due to skewing points.
       if (in_data.points.AtUnsafe(curr_idx).squaredNorm() >
               discontinuity_min_range_sq &&
           in_data.points.AtUnsafe(curr_idx).squaredNorm() <
@@ -366,7 +368,7 @@ class PlanarRegion {
         if (std::count_if(directions_disc.begin(), directions_disc.end(),
                           [&](detail::Neighbor n) {
                             return detail::InBounds(labels, curr_idx, n);
-                          }) == 4) {
+                          }) == kNSkipCycles) {
           for (detail::Neighbor n : directions_disc) {
             // Skip this point & neighbor is any of the returns are nan.
             if (std::isnan(in_data.points.AtUnsafe(curr_idx).z()) ||

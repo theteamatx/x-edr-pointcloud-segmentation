@@ -76,8 +76,8 @@ class ConstMultichannelCloud {
   DECLARE_CONST_ACCESSORS(Colors, eigenmath::Vector3f, float)
 
   // Accessors for per-point attributes of the point cloud:
-  //   cbr_origins, pulse_widths, intensities, return ranges.
-  DECLARE_CONST_ACCESSORS(CbrOrigins, eigenmath::Vector3f, float)
+  // sensor_origins, pulse_widths, intensities, return ranges.
+  DECLARE_CONST_ACCESSORS(SensorOrigins, eigenmath::Vector3f, float)
   DECLARE_CONST_ACCESSORS(ReturnPulseWidths, eigenmath::Vector3f, float)
   DECLARE_CONST_ACCESSORS(ReturnIntensities, eigenmath::Vector3f, float)
   DECLARE_CONST_ACCESSORS(ReturnRanges, eigenmath::Vector3f, float)
@@ -143,8 +143,8 @@ class MultichannelCloud : public ConstMultichannelCloud {
   DECLARE_ACCESSORS(Colors, eigenmath::Vector3f, float)
 
   // Accessors for per-point attributes of the point cloud:
-  //   cbr_origins, pulse_widths, intensities, ranges.
-  DECLARE_ACCESSORS(CbrOrigins, eigenmath::Vector3f, float)
+  // sensor_origins, pulse_widths, intensities, ranges.
+  DECLARE_ACCESSORS(SensorOrigins, eigenmath::Vector3f, float)
   DECLARE_ACCESSORS(ReturnPulseWidths, eigenmath::Vector3f, float)
   DECLARE_ACCESSORS(ReturnIntensities, eigenmath::Vector3f, float)
   DECLARE_ACCESSORS(ReturnRanges, eigenmath::Vector3f, float)

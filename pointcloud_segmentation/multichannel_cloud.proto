@@ -52,11 +52,11 @@ message MultichannelCloudProto {
   // Size: width * height * 3
   repeated float colors_rgb_f = 11;
 
-  // CBr origin (x,y,z) for each points on the [width * height] point cloud.
+  // Sensor origin (x,y,z) for each points on the [width * height] point cloud.
   // Coordinates stored columnwise in xyzxyzxyz order.
   // Size: width * height * 3.
-  repeated float cbr_origins = 13;
-  // CBr attribute fields for each point on the [width * height] point cloud.
+  repeated float sensor_origins = 13;
+  // Sensor attribute fields for each point on the [width * height] point cloud.
   // Size : width * height * 3  (due to each shot having up to 3 returns).
   repeated float return_pulse_widths = 14;
   repeated float return_intensities = 15;

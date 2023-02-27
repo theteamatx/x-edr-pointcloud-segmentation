@@ -55,7 +55,7 @@ TEST(MultichannelCloudTest, HasProperties) {
   EXPECT_FALSE(cloud.HasNormals());
   EXPECT_FALSE(cloud.HasIntensities());
   EXPECT_FALSE(cloud.HasColors());
-  EXPECT_FALSE(cloud.HasCbrOrigins());
+  EXPECT_FALSE(cloud.HasSensorOrigins());
   EXPECT_FALSE(cloud.HasReturnPulseWidths());
   EXPECT_FALSE(cloud.HasReturnIntensities());
   EXPECT_FALSE(cloud.HasReturnRanges());
