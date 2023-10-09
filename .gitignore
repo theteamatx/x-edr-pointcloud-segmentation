@@ -1,5 +1,5 @@
 
 bazel-bin
-bazel-genit
+bazel-x-edr-pointcloud-segmentation
 bazel-out
 bazel-testlogs
