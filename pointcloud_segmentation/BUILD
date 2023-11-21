@@ -26,7 +26,7 @@ proto_library(
         "multichannel_cloud.proto",
     ],
     deps = [
-        "@eigenmath//eigenmath:eigenmath_proto",
+        "@x_edr_eigenmath//eigenmath:eigenmath_proto",
     ],
 )
 
@@ -39,7 +39,7 @@ proto_library(
     name = "detected_objects_proto",
     srcs = ["detected_objects.proto"],
     deps = [
-        "@eigenmath//eigenmath:eigenmath_proto",
+        "@x_edr_eigenmath//eigenmath:eigenmath_proto",
     ],
 )
 
@@ -82,7 +82,7 @@ cc_library(
     name = "cloud",
     hdrs = ["cloud.h"],
     deps = [
-        "@eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath",
     ],
 )
 
@@ -94,7 +94,7 @@ cc_test(
         ":cloud",
         "@com_google_benchmark//:benchmark",
         "@com_google_googletest//:gtest_main",
-        "@eigenmath//eigenmath:matchers",
+        "@x_edr_eigenmath//eigenmath:matchers",
     ],
 )
 
@@ -119,7 +119,7 @@ cc_library(
     deps = [
         ":cloud",
         "@com_google_absl//absl/log",
-        "@eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath",
     ],
 )
 
@@ -144,8 +144,8 @@ cc_library(
         ":cloud",
         ":cloud_proto_utils",
         ":multichannel_cloud_cc_proto",
-        "@eigenmath//eigenmath",
-        "@eigenmath//eigenmath:conversions",
+        "@x_edr_eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath:conversions",
     ],
 )
 
@@ -158,8 +158,8 @@ cc_test(
         "@com_google_benchmark//:benchmark",
         "@com_google_googletest//:gtest_main",
         "@com_google_protobuf//:protobuf",
-        "@eigenmath//eigenmath:eigenmath_cc_proto",
-        "@eigenmath//eigenmath:matchers",
+        "@x_edr_eigenmath//eigenmath:eigenmath_cc_proto",
+        "@x_edr_eigenmath//eigenmath:matchers",
     ],
 )
 
@@ -196,7 +196,7 @@ cc_library(
         ":indices",
         ":plane_estimator_cc_proto",
         "@com_google_absl//absl/log",
-        "@eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath",
     ],
 )
 
@@ -207,7 +207,7 @@ cc_library(
     deps = [
         ":cluster_region",
         ":region_segmentation_config_cc_proto",
-        "@eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath",
     ],
 )
 
@@ -218,8 +218,8 @@ cc_test(
         ":multichannel_cloud",
         ":plane_estimator",
         "@com_google_googletest//:gtest_main",
-        "@eigenmath//eigenmath",
-        "@eigenmath//eigenmath:matchers",
+        "@x_edr_eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath:matchers",
     ],
 )
 
@@ -234,8 +234,8 @@ cc_test(
         ":plane_estimator",
         "@com_google_benchmark//:benchmark",
         "@com_google_googletest//:gtest_main",
-        "@eigenmath//eigenmath",
-        "@eigenmath//eigenmath:matchers",
+        "@x_edr_eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath:matchers",
     ],
 )
 
@@ -253,7 +253,7 @@ cc_library(
         ":region_segmentation_config_cc_proto",
         ":segmentation",
         "@com_google_absl//absl/container:flat_hash_set",
-        "@eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath",
     ],
 )
 
@@ -264,7 +264,7 @@ cc_library(
     deps = [
         ":planar_region",
         ":plane_classification_config_cc_proto",
-        "@eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath",
     ],
 )
 
@@ -274,8 +274,8 @@ cc_library(
     deps = [
         ":indices",
         ":plane_estimator",
-        "@eigenmath//eigenmath",
-        "@mobility_collision//collision:collision_checking",
+        "@x_edr_eigenmath//eigenmath",
+        "@x_edr_mobility_collision//collision:collision_checking",
     ],
 )
 
@@ -291,8 +291,8 @@ cc_library(
         "@com_google_absl//absl/log",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/strings",
-        "@eigenmath//eigenmath",
-        "@eigenmath//eigenmath:conversions",
-        "@eigenmath//eigenmath:eigenmath_cc_proto",
+        "@x_edr_eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath:conversions",
+        "@x_edr_eigenmath//eigenmath:eigenmath_cc_proto",
     ],
 )
